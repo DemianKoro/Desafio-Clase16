@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="https://cdn3.iconfinder.com/data/icons/font-awesome-solid/512/book-quran-512.png" type="image/x-icon">
+    <title>Ultimate Chat</title>
+    <script src="./socket.io/socket.io.js"></script>
+    <script src="./js/main.js" defer></script>
+</head>
+<body>
+    <h1>Productos</h1>
+    <form onsubmit="agregarProducto(this)">
+        <input type="text" id="name" placeholder="Ingresá nombre producto">
+        <input type="number" id="price" placeholder="Ingresa un precio">
+        <input type="url" id="image" placeholder="Ingresa url de imagen">
+        <input type="submit" value="Enviar">
+    </form>
+    <div id="productos"></div>
+
+    <br><br><hr><br><br>
+    <h1>Mensajes</h1>
+    <form onsubmit="agregarMensaje(this)">
+        <input type="email" id="email" placeholder="Ingresá tu email" required>
+        <input type="text" id="texto" placeholder="Ingresa un comentario">
+        <input type="submit" value="Enviar">
+    </form>
+    <div id="mensajes"></div>
+</body>
+</html>
