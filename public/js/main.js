@@ -1,5 +1,5 @@
 
-const socket = io.connect(); 
+const socket = io.connect(); //Acá conectamos el cliente con el servidor
 socket.on('mensajes',data=>{
     console.log("data mensaje",data);
     renderMensaje(data);
@@ -22,7 +22,7 @@ const agregarMensaje = (e)=>{
 
 function renderMensaje(data){
    
-    const html = data.map((elem)=>{
+    const html = data.map((elem, index)=>{
         return `<div>
                     <strong style="color:blue;">${elem.autor}</strong> 
                     <span style="color:brown";>${elem.time}</span>:
@@ -43,7 +43,7 @@ const agregarProducto = (e)=>{
 }
 
 function renderProductos(data){
-    const html = data.map((prod)=>{
+    const html = data.map((prod, index)=>{
         return `<div>
                     <strong>${prod.name}</strong>:
                     <em>$${prod.price}</em></div>
@@ -53,5 +53,5 @@ function renderProductos(data){
     document.getElementById('productos').innerHTML = html;
 }
 
-socket.on('mensajes',function(data){renderMensaje(data);});
-socket.on('productos',function(data){renderProductos(data);});
+// socket.on('mensajes',function(data){renderMensaje(data);});
+// socket.on('productos',function(data){renderProductos(data);});

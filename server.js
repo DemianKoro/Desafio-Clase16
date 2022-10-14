@@ -1,57 +1,39 @@
-const express = require('express');
-const app = express();
+const express = require('express')
+const app = express()
+const server = require('http').Server(app)
+const io = require('socket.io')(server)
+
 const Contenedor = require ('./public/js/Contenedor');
+const contenedorMensajes = new Contenedor('./public/chat.txt');
+const contenedorProductos = new Contenedor('./public/productos.txt');
 
-const {Server:HttpServer} = require('http')
-const {Server:IOServer} = require('socket.io');
-const httpServer = new HttpServer(app);
+let mensajes =[];
+let productos=[];
 
-app.use(express.static('./public'));
+app.use(express.static('public'));
 
-const contenedorMensajes = new Contenedor('chat.txt');
-const contenedorProductos = new Contenedor('productos.txt');
 
-const io = new IOServer(httpServer);
+io.on('connection', function(socket){
+    console.log('Un cliente se ha conectado');
+    socket.emit('mensajes', mensajes);
+    socket.emit('productos', productos);
 
-const productos = [];
-// const productos = require('./productos.txt')
+    socket.on('nuevo-mensaje', function(data) {
+        mensajes.push(data);
+        contenedorMensajes.save(mensajes);
+        io.sockets.emit('mensajes', mensajes);
+    });
 
-const mensajes = [];
-
-io.on('connection',(socket)=>{
-    console.log("Nuevo cliente conectado");
-    socket.emit('mensajes',mensajes);
-    socket.emit('productos',productos);
-
-    socket.on('nuevo-mensaje',mensaje=>{
-        io.sockets.emit('mensajes',mensajes); // Comunica a todos los sockets que estén conectados utilizando el método connect de io
-        if(mensajes.length==0){
-            mensajes.push(mensaje);
-            contenedorMensajes.save(mensajes);
-        }
-        else{
-            mensajes.push(mensaje);
-            contenedorMensajes.save(mensaje);  
-        }
+    socket.on('nuevo-producto', function(data){
+        productos.push(data);
+        contenedorProductos.save(productos);
+        io.sockets.emit('productos', productos);
     })
-    socket.on('nuevo-producto',producto=>{
-        io.sockets.emit('productos',productos); // Comunica a todos los sockets que estén conectados utilizando el método connect de io
+});
 
-        // if(productos.length==0){
-        //     productos.push(producto);
-        //     contenedorProductos.save(productos);
-        // }
-        // else{
-        //     productos.push(producto);
-        //     contenedorProductos.save(producto);
-        // }
+const PORT = process.env.PORT || 8080;
 
-        productos.push(producto)
-        contenedorProductos.save(productos)
-    })
+const srv = server.listen(PORT, () => { 
+    console.log(`Servidor Http con Websockets escuchando en el puerto ${srv.address().port}`);
 })
-
-
-
-const PORT = 8080;
-httpServer.listen(PORT,()=>console.log("SERVER ON")).on('error',error=>console.log(`Error en el servidor ${error}`));
+srv.on('error', error => console.log(`Error en servidor ${error}`))
