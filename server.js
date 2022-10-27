@@ -1,33 +1,43 @@
-const express = require('express')
-const app = express()
-const server = require('http').Server(app)
-const io = require('socket.io')(server)
+import * as io from "socket.io";
+import express from 'express';
+import { createServer } from 'http';
 
-const Contenedor = require ('./public/js/Contenedor');
+import ClienteSql from './sql.js'
+import { options } from './options/mysql.js';
+import { options2 } from './options/SQLite3.js';
+
+const app = express(); 
+const server = createServer(app); 
+const socketIo = new io.Server(server);
+
+
+import Contenedor from './public/js/Contenedor.js';
 const contenedorMensajes = new Contenedor('./public/chat.txt');
-const contenedorProductos = new Contenedor('./public/productos.txt');
+const sql = new ClienteSql(options);
+const sqlite = new ClienteSql(options2);
+// const contenedorProductos = new Contenedor('./public/productos.txt');
 
 let mensajes =[];
-let productos=[];
+let productos =[];
 
 app.use(express.static('public'));
 
 
-io.on('connection', function(socket){
+socketIo.on('connection', function(socket){
     console.log('Un cliente se ha conectado');
     socket.emit('mensajes', mensajes);
     socket.emit('productos', productos);
 
-    socket.on('nuevo-mensaje', function(data) {
+    socket.on('nuevo-mensaje', async function(data) {
         mensajes.push(data);
-        contenedorMensajes.save(mensajes);
-        io.sockets.emit('mensajes', mensajes);
+        await sqlite.saveMessage(data);
+        socketIo.sockets.emit('mensajes', mensajes);
     });
 
-    socket.on('nuevo-producto', function(data){
+    socket.on('nuevo-producto', async function(data){
         productos.push(data);
-        contenedorProductos.save(productos);
-        io.sockets.emit('productos', productos);
+        await sql.save(data);
+        socketIo.sockets.emit('productos', productos);
     })
 });
 

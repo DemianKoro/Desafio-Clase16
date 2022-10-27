@@ -1,7 +1,7 @@
-const fs = require('fs');
-const { parse } = require('path');
+import fs from 'fs';
+import {parse} from 'path';
 
-class Contenedor{
+export default class Contenedor{
     constructor(archivo){
         this.archivo = archivo;
     }
@@ -52,4 +52,3 @@ class Contenedor{
 
 let contenedor = new Contenedor('./productos.txt');
 
-module.exports = Contenedor;

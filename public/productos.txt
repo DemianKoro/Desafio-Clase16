@@ -1,50 +1,31 @@
 [
   {
-    "name": "Werewolf",
-    "price": 700,
-    "image": "https://cdn3.iconfinder.com/data/icons/fantasy-and-role-play-game-adventure-quest/512/Werewolf-512.png",
-    "id": 1
-  },
-  {
-    "name": "Witches",
-    "price": 915,
-    "image": "https://cdn3.iconfinder.com/data/icons/fantasy-and-role-play-game-adventure-quest/512/Sorceress-512.png",
-    "id": 2
-  },
-  {
-    "name": "Farenheit 451",
-    "price": 645,
-    "image": "https://cdn3.iconfinder.com/data/icons/fantasy-and-role-play-game-adventure-quest/512/Destructive_Magic-512.png",
-    "id": 3
-  },
-  {
     "name": "Wild Cards",
     "price": 979,
     "image": "https://cdn3.iconfinder.com/data/icons/fantasy-and-role-play-game-adventure-quest/512/Fairy-512.png",
-    "id": 4
-  },
-  {
-    "name": "Centauro",
-    "price": 600,
-    "image": "https://cdn3.iconfinder.com/data/icons/fantasy-and-role-play-game-adventure-quest/512/Centaur-512.png",
-    "id": 5
+    "description": "Libro tapa blanda, encuadernación color blanco",
+    "id": 1,
+    "code": 37,
+    "stock": 4,
+    "timestamp": "15/10/2022, 17:02:14"
   },
   [
     {
-      "name": "Libro2",
-      "price": "100",
-      "image": "https://www.iconfinder.com/icons/8665076/book_quran_icon"
+      "name": "Drácula",
+      "price": "890",
+      "stock": "4",
+      "description": "Tapa dura",
+      "code": "55",
+      "image": "https://cdn3.iconfinder.com/data/icons/font-awesome-solid/512/book-quran-512.png"
     }
   ],
   [
     {
-      "name": "Libro2",
-      "price": "100",
-      "image": "https://www.iconfinder.com/icons/8665076/book_quran_icon"
-    },
-    {
-      "name": "Libro2",
-      "price": "500",
+      "name": "Short Rings",
+      "price": "890",
+      "stock": "5",
+      "description": "Tapa dura",
+      "code": "60",
       "image": "https://cdn3.iconfinder.com/data/icons/font-awesome-solid/512/book-quran-512.png"
     }
   ]
